@@ -1,25 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import { Layout, Menu } from 'antd';
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+} from "react-router-dom";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import React from 'react';
+import SearchRoom from './SearchRoom';
+import Login from './Login';
+
+class SiderDemo extends React.Component {
+ 
+
+  render() {
+    return (
+      <Router>
+
+        <Routes>
+          <Route path="/" element={<SearchRoom />} />
+          <Route path="/login" element={<Login />} />
+        </Routes>
+
+      </Router>
+
+    );
+  }
 }
 
-export default App;
+export default SiderDemo;
