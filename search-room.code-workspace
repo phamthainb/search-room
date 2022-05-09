@@ -1,0 +1,25 @@
+{
+  "folders": [
+    { "path": "./customer-service" },
+    { "path": "./employee-service" },
+    { "path": "./front-end" },
+    { "path": "./room-service" },
+    { "path": "./search-room-service" },
+    { "path": ".", "name": "rooot" }
+  ],
+  "settings": {
+    "files.exclude": {
+      "**/.git": true,
+      "**/.svn": true,
+      "**/.hg": true,
+      "**/CVS": true,
+      "**/.DS_Store": true,
+      "**/Thumbs.db": true,
+      "customer-service": true,
+      "employee-service": true,
+      "front-end": true,
+      "room-service": true,
+      "search-room-service": true
+    }
+  }
+}
