@@ -28,4 +28,16 @@ export class Room {
 
   @Column()
   name: string;
+
+  @Column()
+  desc: string;
+
+  @Column({ type: 'boolean', default: true })
+  status: boolean; // true: trống, false: đang sd
+
+  @Column()
+  price: number;
+
+  @Column()
+  type: number; // 1, 2, 3
 }

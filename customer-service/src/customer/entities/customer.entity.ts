@@ -35,4 +35,7 @@ export class Customer extends BaseEntity {
 
   @Column()
   address: string;
+
+  @Column()
+  passport: string;
 }

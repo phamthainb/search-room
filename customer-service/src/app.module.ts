@@ -1,9 +1,28 @@
-import { Module } from '@nestjs/common';
+import {
+  HttpCode,
+  HttpException,
+  HttpStatus,
+  MiddlewareConsumer,
+  Module,
+  NestMiddleware,
+  NestModule,
+} from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { CustomerModule } from './customer/customer.module';
+// import { Request, Response } from 'express';
 
+// class CheckAuth implements NestMiddleware {
+//   use(req: Request, res: Response, next: (error?: any) => void) {
+//     const { headers } = req;
+//     console.log('headers', headers.authorization);
+//     if (headers.authorization) {
+//       next();
+//     }
+//     throw new HttpException('FORBIDDEN', HttpStatus.FORBIDDEN);
+//   }
+// }
 @Module({
   imports: [
     CustomerModule,
@@ -21,4 +40,9 @@ import { CustomerModule } from './customer/customer.module';
   controllers: [AppController],
   providers: [AppService],
 })
+// export class AppModule implements NestModule {
+//   configure(consumer: MiddlewareConsumer) {
+//     consumer.apply(CheckAuth).forRoutes('/customer');
+//   }
+// }
 export class AppModule {}
