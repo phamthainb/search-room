@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { EmployeeService } from './employee.service';
 import { CreateEmployeeDto } from './dto/create-employee.dto';
 import { UpdateEmployeeDto } from './dto/update-employee.dto';
@@ -23,12 +31,27 @@ export class EmployeeController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateEmployeeDto: UpdateEmployeeDto) {
+  async update(
+    @Param('id') id: string,
+    @Body() updateEmployeeDto: UpdateEmployeeDto,
+  ) {
     return this.employeeService.update(+id, updateEmployeeDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.employeeService.remove(+id);
+  }
+
+  @Post('login')
+  async login(
+    @Body() { username, password }: { username: string; password: string },
+  ) {
+    return this.employeeService.login(username, password);
+  }
+
+  @Post('auth')
+  async validate() {
+    return this.employeeService.validate();
   }
 }
