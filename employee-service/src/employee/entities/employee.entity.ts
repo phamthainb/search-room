@@ -26,12 +26,12 @@ export class Employee {
   delete_at: Date;
   //----------------------------------------------///
 
-  @Column()
+  @Column('varchar')
   name: string;
 
-  @Column()
-  phone: string;
+  @Column('varchar', { unique: true })
+  username: string;
 
-  @Column()
-  address: string;
+  @Column('varchar')
+  password: string;
 }

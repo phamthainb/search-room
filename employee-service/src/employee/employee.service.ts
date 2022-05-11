@@ -1,26 +1,76 @@
-import { Injectable } from '@nestjs/common';
+import {
+  Inject,
+  Injectable,
+  Scope,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { CreateEmployeeDto } from './dto/create-employee.dto';
 import { UpdateEmployeeDto } from './dto/update-employee.dto';
+import * as bcrypt from 'bcrypt';
+import * as jwt from 'jsonwebtoken';
+import { EmployeeRepository } from './employee.repository';
+import { SECRET_KEY } from 'src/app.module';
+import { REQUEST } from '@nestjs/core';
+import { Request } from 'express';
 
-@Injectable()
+@Injectable({ scope: Scope.REQUEST })
 export class EmployeeService {
-  create(createEmployeeDto: CreateEmployeeDto) {
-    return 'This action adds a new employee';
+  constructor(
+    private readonly employeeRepo: EmployeeRepository,
+    @Inject(REQUEST) private readonly request: Request,
+  ) {}
+
+  async create(createEmployeeDto: CreateEmployeeDto) {
+    const hashPasword = await bcrypt.hash(createEmployeeDto.password, 12);
+    await this.employeeRepo.save({
+      ...createEmployeeDto,
+      password: hashPasword,
+    });
+    return createEmployeeDto;
   }
 
-  findAll() {
-    return `This action returns all employee`;
+  async findAll() {
+    return await this.employeeRepo.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} employee`;
+  async findOne(id: number) {
+    return await this.employeeRepo.findOne({ where: { id } });
   }
 
-  update(id: number, updateEmployeeDto: UpdateEmployeeDto) {
-    return `This action updates a #${id} employee`;
+  async update(id: number, updateEmployeeDto: UpdateEmployeeDto) {
+    const current = await this.findOne(id);
+    return await this.employeeRepo.save({ ...current, ...updateEmployeeDto });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} employee`;
+  async remove(id: number) {
+    return await this.employeeRepo.delete({ id });
+  }
+
+  async comparePassword(password: string, hashPassword) {
+    return bcrypt.compare(password, hashPassword);
+  }
+
+  async generateToken(id: number) {
+    return await jwt.sign(id + '', SECRET_KEY);
+  }
+
+  async login(username: string, password: string) {
+    const current = await this.employeeRepo.findOne({ where: { username } });
+    if (current) {
+      if (this.comparePassword(password, current.password)) {
+        return await this.generateToken(current.id);
+      }
+    }
+    throw new UnauthorizedException();
+  }
+
+  async validate() {
+    const token = this.request.headers.authorization.split(' ')[1];
+    const id = jwt.verify(token, SECRET_KEY);
+    const current = this.findOne(+id);
+    if (current) {
+      return current;
+    }
+    throw new UnauthorizedException();
   }
 }
