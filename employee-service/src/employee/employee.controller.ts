@@ -6,10 +6,12 @@ import {
   Patch,
   Param,
   Delete,
+  Req,
 } from '@nestjs/common';
 import { EmployeeService } from './employee.service';
 import { CreateEmployeeDto } from './dto/create-employee.dto';
 import { UpdateEmployeeDto } from './dto/update-employee.dto';
+import { Request } from 'express';
 
 @Controller('employee')
 export class EmployeeController {
@@ -46,7 +48,10 @@ export class EmployeeController {
   @Post('login')
   async login(
     @Body() { username, password }: { username: string; password: string },
+    @Req() req: Request,
   ) {
+    console.log('req', req);
+
     return this.employeeService.login(username, password);
   }
 

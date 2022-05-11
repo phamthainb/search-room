@@ -47,7 +47,7 @@ export class EmployeeService {
   }
 
   async comparePassword(password: string, hashPassword) {
-    return bcrypt.compare(password, hashPassword);
+    return await bcrypt.compare(password, hashPassword);
   }
 
   async generateToken(id: number) {
@@ -57,7 +57,7 @@ export class EmployeeService {
   async login(username: string, password: string) {
     const current = await this.employeeRepo.findOne({ where: { username } });
     if (current) {
-      if (this.comparePassword(password, current.password)) {
+      if (await this.comparePassword(password, current.password)) {
         return await this.generateToken(current.id);
       }
     }

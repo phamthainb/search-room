@@ -11,8 +11,8 @@ import { EmployeeModule } from './employee/employee.module';
       type: 'mysql',
       host: 'localhost',
       port: 3306,
-      username: 'sonht',
-      password: 'htson2000', // just is local password :)) happy hacking
+      username: 'root',
+      password: '', // just is local password :)) happy hacking
       database: 'search-room',
       entities: ['dist/**/*.entity{.ts,.js}'],
       synchronize: true,

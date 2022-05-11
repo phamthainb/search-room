@@ -1,5 +1,6 @@
 export const URL = {
-  LOGIN: "/employee/login",
-  GET_ROOMS: "/rooms",
-  GET_ROOM: (id) => "/rooms/" + id,
+  LOGIN: "/login",
+  GET_ROOMS: "/search-room",
+  GET_ROOM: (id) => "/room/" + id,
+  GET_ROOM_ORDER: "/search-order",
 };

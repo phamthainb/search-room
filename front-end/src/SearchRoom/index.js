@@ -25,40 +25,41 @@ const AdvancedSearchForm = ({ onSearch }) => {
       onFinish={onFinish}
     >
       <Row gutter={24}>
-        <Col span={8}>
+        <Col span={12}>
           <Form.Item name={"name"} label={"Tên phòng"}>
             <Input />
           </Form.Item>
         </Col>
-        <Col span={8}>
+        <Col span={12}>
           <Form.Item name={"status"} label={"Trạng thái"}>
-            <Select defaultValue={0}>
-              <Option value={0}>Trống</Option>
+            <Select defaultValue={-1}>
+              <Option value={-1}>Tất cả</Option>
+              <Option value={0}>Còn trống</Option>
               <Option value={1}>Đang sử dụng</Option>
             </Select>
           </Form.Item>
         </Col>
-        <Col span={8}>
+        <Col span={12}>
           <Form.Item name={"minPrice"} label={"Giá thấp nhất"}>
             <InputNumber style={{ width: "100%" }} min={0} />
           </Form.Item>
         </Col>
-        <Col span={8}>
+        <Col span={12}>
           <Form.Item name={"maxPrice"} label={"Giá cao nhất"}>
             <InputNumber style={{ width: "100%" }} min={0} />
           </Form.Item>
         </Col>
-        <Col span={8}>
+        <Col span={24}>
           <Form.Item name={"desc"} label={"Mô tả"}>
             <Input />
           </Form.Item>
         </Col>
-        <Col span={8}>
+        <Col span={12}>
           <Form.Item name={"startTime"} label={"Ngày bắt đầu"}>
             <DatePicker />
           </Form.Item>
         </Col>
-        <Col span={8}>
+        <Col span={12}>
           <Form.Item name={"endTime"} label={"Ngày kết thúc"}>
             <DatePicker />
           </Form.Item>
@@ -70,20 +71,23 @@ const AdvancedSearchForm = ({ onSearch }) => {
           span={24}
           style={{
             textAlign: "right",
+            marginBottom: '24px'
           }}
         >
-          <Button type="primary" htmlType="submit">
-            Search
+          <Button type="ghost" >
+            Export Excel
           </Button>
+
           <Button
-            style={{
-              margin: "0 8px",
-            }}
             onClick={() => {
               form.resetFields();
             }}
           >
             Clear
+          </Button>
+
+          <Button type="primary" htmlType="submit">
+            Search
           </Button>
         </Col>
       </Row>
@@ -122,17 +126,6 @@ const columns = [
     title: "Mô tả",
     dataIndex: "desc",
     key: "desc",
-  },
-];
-
-const data = [
-  {
-    id: 1,
-    name: "404",
-    price: 123,
-    desc: "desc",
-    status: false,
-    type: 2,
   },
 ];
 
