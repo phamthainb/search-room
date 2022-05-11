@@ -4,6 +4,7 @@
     { "path": "./employee-service" },
     { "path": "./front-end" },
     { "path": "./room-service" },
+    { "path": "./order-service" },
     { "path": "./search-room-service" },
     { "path": ".", "name": "rooot" }
   ],
@@ -19,6 +20,7 @@
       "employee-service": true,
       "front-end": true,
       "room-service": true,
+      "order-service": true,
       "search-room-service": true
     }
   }

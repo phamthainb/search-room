@@ -8,8 +8,8 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-@Entity('rooms')
-export class Room extends BaseEntity {
+@Entity('orders')
+export class Order extends BaseEntity {
   @PrimaryGeneratedColumn('increment')
   id: number;
 
@@ -28,17 +28,20 @@ export class Room extends BaseEntity {
   //----------------------------------------------///
 
   @Column()
-  name: string;
+  customer: number;
 
   @Column()
-  desc: string;
-
-  @Column({ type: 'boolean', default: true })
-  status: boolean; // true: trống, false: đang sd
+  room: number;
 
   @Column()
-  price: number;
+  employee: number;
 
   @Column()
-  type: number; // 1, 2, 3
+  start: Date;
+
+  @Column()
+  end: Date;
+
+  @Column({ default: 1 })
+  status: number; // 0: đã trả, 1: đang sd, 2: gia hạn thêm
 }

@@ -6,14 +6,14 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const config = new DocumentBuilder()
-    .setTitle('Customer')
-    .setDescription('The Customer API description')
-    .addTag('customer')
+    .setTitle('Order')
+    .setDescription('The Order API description')
+    .addTag('Order')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
-  await app.listen(3000);
-  Logger.log('MAIN', await app.getUrl());
+  await app.listen(3003);
+  Logger.log(await app.getUrl());
 }
 bootstrap();

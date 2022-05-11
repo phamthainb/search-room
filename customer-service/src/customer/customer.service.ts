@@ -1,26 +1,30 @@
 import { Injectable } from '@nestjs/common';
+import { CustomerRepository } from './customer.repository';
 import { CreateCustomerDto } from './dto/create-customer.dto';
 import { UpdateCustomerDto } from './dto/update-customer.dto';
 
 @Injectable()
 export class CustomerService {
-  create(createCustomerDto: CreateCustomerDto) {
-    return 'This action adds a new customer';
+  constructor(private repo_customer: CustomerRepository) {}
+
+  async create(createCustomerDto: CreateCustomerDto) {
+    return await this.repo_customer.save({ ...createCustomerDto });
   }
 
-  findAll() {
-    return `This action returns all customer`;
+  async findAll() {
+    return await this.repo_customer.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} customer`;
+  async findOne(id: number) {
+    return await this.repo_customer.findOne(id);
   }
 
-  update(id: number, updateCustomerDto: UpdateCustomerDto) {
-    return `This action updates a #${id} customer`;
+  async update(id: number, updateCustomerDto: UpdateCustomerDto) {
+    const c = this.repo_customer.findOne(id);
+    return await this.repo_customer.save({ ...c, ...updateCustomerDto });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} customer`;
+  async remove(id: number) {
+    return await this.repo_customer.softDelete(id);
   }
 }
