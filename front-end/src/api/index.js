@@ -1,87 +1,82 @@
-import axios from 'axios';
+import axios from "axios";
 
 // define common config for Axios
 const instanceAxios = {
-    baseURL: process.env.REACT_APP_API,
+  baseURL: process.env.REACT_APP_API,
 };
 
 const axiosConfig = axios.create(instanceAxios);
 
 const request = ({ method, url, data, ...rest }) =>
-    axiosConfig({
-        method: method,
-        url: url,
-        data: data,
-        ...rest,
-    });
+  axiosConfig({
+    method: method,
+    url: url,
+    data: data,
+    ...rest,
+  });
 
 const requestToken = ({ method, url, data, ...rest }) => {
-    let token = localStorage.getItem('token');
+  let token = localStorage.getItem("token");
 
-    return axiosConfig({
-        method: method,
-        url: url,
-        data: data,
-        headers: {
-            Authorization: `Bearer ${token}`,
-        },
-        ...rest,
-    });
+  return axiosConfig({
+    method: method,
+    url: url,
+    data: data,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    ...rest,
+  });
 };
 
 const axiosConfigInter = axios.create(instanceAxios);
 
 // Add a request interceptor
 axiosConfigInter.interceptors.request.use(
-    function (config) {
-        // Do something before request is sent
-        // store.dispatch(changeLoading(true));
-        return config;
-    },
-    function (error) {
-        // Do something with request error
-        // store.dispatch(changeLoading(false));
-        return Promise.reject(error);
-    },
+  function (config) {
+    // Do something before request is sent
+    // store.dispatch(changeLoading(true));
+    return config;
+  },
+  function (error) {
+    // Do something with request error
+    // store.dispatch(changeLoading(false));
+    return Promise.reject(error);
+  }
 );
 
 // Add a response interceptor
 axiosConfigInter.interceptors.response.use(
-    function (response) {
-        // store.dispatch(changeLoading(false));
-        return response;
-    },
-    function (error) {
-        // store.dispatch(changeLoading(false));
-        return Promise.reject(error);
-    },
+  function (response) {
+    // store.dispatch(changeLoading(false));
+    return response;
+  },
+  function (error) {
+    // store.dispatch(changeLoading(false));
+    return Promise.reject(error);
+  }
 );
 
 const requestInter = ({ method, url, data, ...rest }) =>
-    axiosConfigInter({
-        method: method,
-        url: url,
-        data: data,
-        ...rest,
-    });
+  axiosConfigInter({
+    method: method,
+    url: url,
+    data: data,
+    ...rest,
+  });
 
-const requestInterToken = ({
-    method,
-    url,
-    data,
-    ...rest
-}) => {
-    let token = localStorage.getItem('token');
+const requestInterToken = ({ method, url, data, ...rest }) => {
+  let token = localStorage.getItem("token");
 
-    return axiosConfigInter({
-        method: method,
-        url: url,
-        data: data,
-        headers: {
-            Authorization: `Bearer ${token}`,
-        },
-        ...rest,
-    });
+  return axiosConfigInter({
+    method: method,
+    url: url,
+    data: data,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    ...rest,
+  });
 };
 
 export { request, requestToken, requestInter, requestInterToken };
