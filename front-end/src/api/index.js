@@ -1,6 +1,7 @@
 import axios from "axios";
 
 // define common config for Axios
+console.log(process.env.REACT_APP_API);
 const instanceAxios = {
   baseURL: process.env.REACT_APP_API,
 };

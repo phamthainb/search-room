@@ -1,16 +1,31 @@
-import { Form, Input, Button, Row } from "antd";
+import { Form, Input, Button, Row, message } from "antd";
+import { request } from "../api";
+import { URL } from "../api/url";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const onFinish = (values) => {
-    console.log("Success:", values);
-  };
+  const nav = useNavigate();
 
-  const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
+  //employee1 - 1
+
+  const onFinish = (values) => {
+    request({ method: "POST", url: URL.LOGIN, data: values })
+      .then((res) => {
+        localStorage.setItem("token", res.data);
+        nav("/");
+      })
+      .catch((err) => {
+        message.error("Invalid account !");
+      });
   };
 
   return (
-    <Row type="flex" justify="center" align="middle" style={{height: '100vh'}}>
+    <Row
+      type="flex"
+      justify="center"
+      align="middle"
+      style={{ height: "100vh" }}
+    >
       <Form
         name="basic"
         labelCol={{
@@ -20,7 +35,6 @@ const Login = () => {
           span: 16,
         }}
         onFinish={onFinish}
-        onFinishFailed={onFinishFailed}
         autoComplete="off"
         style={{
           padding: "40px",

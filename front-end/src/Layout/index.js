@@ -1,11 +1,6 @@
 import { Layout, Menu } from "antd";
 import React, { useEffect } from "react";
-import {
-  DesktopOutlined,
-  TeamOutlined,
-  UserOutlined,
-  HomeOutlined,
-} from "@ant-design/icons";
+import { DesktopOutlined, LoginOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 
 const { Header, Content, Footer, Sider } = Layout;
@@ -19,23 +14,23 @@ function getItem(label, key, icon, onClick) {
   };
 }
 
-const items = [
-  getItem("Search Room", "1", <DesktopOutlined />, () => {
-    window.location.replace("/");
-  }),
-  getItem("Customer", "2", <UserOutlined />, () => {
-    window.location.replace("/c");
-  }),
-  getItem("Employee", "3", <TeamOutlined />, () => {
-    window.location.replace("/e");
-  }),
-  getItem("Room", "4", <HomeOutlined />, () => {
-    window.location.replace("/r");
-  }),
-];
-
 export default function Layouts(props) {
   const nav = useNavigate();
+
+  const items = [
+    getItem("Search Room", "1", <DesktopOutlined />, () => {
+      nav("/");
+    }),
+    // getItem("Customer", "2", <UserOutlined />, () => {
+    //   window.location.replace("/c");
+    // }),
+    // getItem("Employee", "3", <TeamOutlined />, () => {
+    //   window.location.replace("/e");
+    // }),
+    getItem("Logout", "2", <LoginOutlined />, () => {
+      nav("/login", { replace: true });
+    }),
+  ];
 
   useEffect(() => {
     if (!localStorage.getItem("token")) {

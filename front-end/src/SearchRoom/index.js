@@ -1,181 +1,166 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from "react";
 
-import { Table, Tag, Space } from 'antd';
-import Layouts from '../Layout';
+import { Table, InputNumber, DatePicker, message } from "antd";
+import Layouts from "../Layout";
 
-import { Form, Row, Col, Input, Button, Select } from 'antd';
-import { DownOutlined, UpOutlined } from '@ant-design/icons';
+import { Form, Row, Col, Input, Button, Select } from "antd";
+import { Link } from "react-router-dom";
+import { requestToken } from "../api";
+import { URL } from "../api/url";
+
 const { Option } = Select;
 
-const AdvancedSearchForm = () => {
-    const [expand, setExpand] = useState(false);
-    const [form] = Form.useForm();
+const AdvancedSearchForm = ({ onSearch }) => {
+  const [form] = Form.useForm();
 
-    const getFields = () => {
-        const count = 5;
-        const children = [];
+  const onFinish = (values) => {
+    onSearch(values);
+  };
 
-        for (let i = 0; i < count; i++) {
-            children.push(
-                <Col span={8} key={i}>
-                    <Form.Item
-                        name={`field-${i}`}
-                        label={`Field ${i}`}
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Input something!',
-                            },
-                        ]}
-                    >
-                        {i % 3 !== 1 ? (
-                            <Input placeholder="placeholder" />
-                        ) : (
-                            <Select defaultValue="2">
-                                <Option value="1">1</Option>
-                                <Option value="2">
-                                    longlonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglong
-                                </Option>
-                            </Select>
-                        )}
-                    </Form.Item>
-                </Col>,
-            );
-        }
+  return (
+    <Form
+      form={form}
+      name="advanced_search"
+      className="ant-advanced-search-form"
+      onFinish={onFinish}
+    >
+      <Row gutter={24}>
+        <Col span={8}>
+          <Form.Item name={"name"} label={"Tên phòng"}>
+            <Input />
+          </Form.Item>
+        </Col>
+        <Col span={8}>
+          <Form.Item name={"status"} label={"Trạng thái"}>
+            <Select defaultValue={0}>
+              <Option value={0}>Trống</Option>
+              <Option value={1}>Đang sử dụng</Option>
+            </Select>
+          </Form.Item>
+        </Col>
+        <Col span={8}>
+          <Form.Item name={"minPrice"} label={"Giá thấp nhất"}>
+            <InputNumber style={{ width: "100%" }} min={0} />
+          </Form.Item>
+        </Col>
+        <Col span={8}>
+          <Form.Item name={"maxPrice"} label={"Giá cao nhất"}>
+            <InputNumber style={{ width: "100%" }} min={0} />
+          </Form.Item>
+        </Col>
+        <Col span={8}>
+          <Form.Item name={"desc"} label={"Mô tả"}>
+            <Input />
+          </Form.Item>
+        </Col>
+        <Col span={8}>
+          <Form.Item name={"startTime"} label={"Ngày bắt đầu"}>
+            <DatePicker />
+          </Form.Item>
+        </Col>
+        <Col span={8}>
+          <Form.Item name={"endTime"} label={"Ngày kết thúc"}>
+            <DatePicker />
+          </Form.Item>
+        </Col>
+      </Row>
 
-        return children;
-    };
-
-    const onFinish = (values) => {
-        console.log('Received values of form: ', values);
-    };
-
-    return (
-        <Form
-            form={form}
-            name="advanced_search"
-            className="ant-advanced-search-form"
-            onFinish={onFinish}
+      <Row>
+        <Col
+          span={24}
+          style={{
+            textAlign: "right",
+          }}
         >
-            <Row gutter={24}>{getFields()}</Row>
-            <Row>
-                <Col
-                    span={24}
-                    style={{
-                        textAlign: 'right',
-                    }}
-                >
-                    <Button type="primary" htmlType="submit">
-                        Search
-                    </Button>
-                    <Button
-                        style={{
-                            margin: '0 8px',
-                        }}
-                        onClick={() => {
-                            form.resetFields();
-                        }}
-                    >
-                        Clear
-                    </Button>
-                    <a
-                        style={{
-                            fontSize: 12,
-                        }}
-                        onClick={() => {
-                            setExpand(!expand);
-                        }}
-                    >
-                        {expand ? <UpOutlined /> : <DownOutlined />} Collapse
-                    </a>
-                </Col>
-            </Row>
-        </Form>
-    );
+          <Button type="primary" htmlType="submit">
+            Search
+          </Button>
+          <Button
+            style={{
+              margin: "0 8px",
+            }}
+            onClick={() => {
+              form.resetFields();
+            }}
+          >
+            Clear
+          </Button>
+        </Col>
+      </Row>
+    </Form>
+  );
 };
 
 const columns = [
-    {
-        title: 'Name',
-        dataIndex: 'name',
-        key: 'name',
-        render: text => <a>{text}</a>,
-    },
-    {
-        title: 'Age',
-        dataIndex: 'age',
-        key: 'age',
-    },
-    {
-        title: 'Address',
-        dataIndex: 'address',
-        key: 'address',
-    },
-    {
-        title: 'Tags',
-        key: 'tags',
-        dataIndex: 'tags',
-        render: tags => (
-            <>
-                {tags.map(tag => {
-                    let color = tag.length > 5 ? 'geekblue' : 'green';
-                    if (tag === 'loser') {
-                        color = 'volcano';
-                    }
-                    return (
-                        <Tag color={color} key={tag}>
-                            {tag.toUpperCase()}
-                        </Tag>
-                    );
-                })}
-            </>
-        ),
-    },
-    {
-        title: 'Action',
-        key: 'action',
-        render: (text, record) => (
-            <Space size="middle">
-                <a>Invite {record.name}</a>
-                <a>Delete</a>
-            </Space>
-        ),
-    },
+  {
+    title: "Tên phòng",
+    dataIndex: "name",
+    key: "name",
+    render: (text, record) => (
+      <Link to={`/room/${record.id}`}>
+        <a>{text}</a>
+      </Link>
+    ),
+  },
+  {
+    title: "Giá",
+    dataIndex: "price",
+    key: "price",
+  },
+  {
+    title: "Loại",
+    dataIndex: "type",
+    key: "price",
+  },
+  {
+    title: "Trạng thái",
+    dataIndex: "status",
+    key: "status",
+    render: (text, record) => (record.status ? "Đang sử dụng" : "Còn trống"),
+  },
+  {
+    title: "Mô tả",
+    dataIndex: "desc",
+    key: "desc",
+  },
 ];
 
 const data = [
-    {
-        key: '1',
-        name: 'John Brown',
-        age: 32,
-        address: 'New York No. 1 Lake Park',
-        tags: ['nice', 'developer'],
-    },
-    {
-        key: '2',
-        name: 'Jim Green',
-        age: 42,
-        address: 'London No. 1 Lake Park',
-        tags: ['loser'],
-    },
-    {
-        key: '3',
-        name: 'Joe Black',
-        age: 32,
-        address: 'Sidney No. 1 Lake Park',
-        tags: ['cool', 'teacher'],
-    },
+  {
+    id: 1,
+    name: "404",
+    price: 123,
+    desc: "desc",
+    status: false,
+    type: 2,
+  },
 ];
 
 const SearchRoom = () => {
-    return (
-        <Layouts>
-            <AdvancedSearchForm />
-            <Table columns={columns} dataSource={data} />
-        </Layouts>
-    )
-}
+  const [params, setParams] = useState({});
 
-export default SearchRoom
+  const [data, setData] = useState([]);
 
+  useEffect(() => {
+    requestToken({ method: "GET", url: URL.GET_ROOMS, params })
+      .then((res) => {
+        setData(res.data);
+      })
+      .catch(() => {
+        message.error("Error in searching rooms");
+      });
+  }, [params]);
 
+  return (
+    <Layouts>
+      <AdvancedSearchForm
+        onSearch={(values) => {
+          setParams({ ...values });
+        }}
+      />
+      <Table columns={columns} dataSource={data} />
+    </Layouts>
+  );
+};
+
+export default SearchRoom;
