@@ -6,60 +6,60 @@
 
 - Thành viên và đóng góp - code
     - Phạm Hồng Thái - B18DCCN599
-        Search Room 
-            Login
-            Search Room 
-            Search Order
-            Export Excel
-    ![Img](https://github.com/phamthainb/search-room/blob/master/docs/search-room.jpg)
+        - Search Room 
+            - Login
+            - Search Room 
+            - Search Order
+            - Export Excel
+            - ![Img](https://github.com/phamthainb/search-room/blob/master/docs/search-room.jpg)
         
-        Room
-            Get room (GET + /Room/)
-            Update Room (PUT + /Room/)
-            Create Room (POST + /Room/)
-            Delete
-    ![Img](https://github.com/phamthainb/search-room/blob/master/docs/room.jpg)
+        - Room
+            - Get room (GET + /Room/)
+            - Update Room (PUT + /Room/)
+            - Create Room (POST + /Room/)
+            - Delete
+            - ![Img](https://github.com/phamthainb/search-room/blob/master/docs/room.jpg)
 
-        Order
-            Get order history (GET + /Order/)
-            Create order (POST + /Order/)
-            Update order (PUT + /Order/)
-            Detele
-    ![Img](https://github.com/phamthainb/search-room/blob/master/docs/order.jpg)
+        - Order
+            - Get order history (GET + /Order/)
+            - Create order (POST + /Order/)
+            - Update order (PUT + /Order/)
+            - Detele
+            - ![Img](https://github.com/phamthainb/search-room/blob/master/docs/order.jpg)
 
     - Hoàng Thái Sơn - B18DCCN511
-        Export Excel
-            Export (POST)
-    ![Img](https://github.com/phamthainb/search-room/blob/master/docs/excel.jpg)
+        - Export Excel
+            - Export (POST)
+            - ![Img](https://github.com/phamthainb/search-room/blob/master/docs/excel.jpg)
 
-        Employee 
-            Get Employee (GET + /Employee/)
-            Check Auth  (POST + /Employee/) => true/ false + info employee
-            Insert
-            Delete
-            Login => (token)
-    ![Img](https://github.com/phamthainb/search-room/blob/master/docs/employee.jpg)
+        - Employee 
+            - Get Employee (GET + /Employee/)
+            - Check Auth  (POST + /Employee/) => true/ false + info employee
+            - Insert
+            - Delete
+            - Login => (token)
+            - ![Img](https://github.com/phamthainb/search-room/blob/master/docs/employee.jpg)
 
-        FrontEnd
-            Login
-            Search Room
-            Detail Room
-            Export Excel
-    ![Img](https://github.com/phamthainb/search-room/blob/master/docs/fe.jpg)
+        - FrontEnd
+            - Login
+            - Search Room
+            - Detail Room
+            - Export Excel
+            - ![Img](https://github.com/phamthainb/search-room/blob/master/docs/fe.jpg)
 
     - Nguyễn Mạnh Tuân - B18DCCN555
-        Customer
-            Get customer (GET + /Customer/)
-            Create Customer  (POST + /Customer/)
-            Update information (PUT + /Customer/)
-            Delete 
-    ![Img](https://github.com/phamthainb/search-room/blob/master/docs/customer.jpg)
+        - Customer
+            - Get customer (GET + /Customer/)
+            - Create Customer  (POST + /Customer/)
+            - Update information (PUT + /Customer/)
+            - Delete 
+            - ![Img](https://github.com/phamthainb/search-room/blob/master/docs/customer.jpg)
 
-        FrontEnd
-            Login
-            Search Room
-            Detail Room
-            Export Excel
+        - FrontEnd
+            - Login
+            - Search Room
+            - Detail Room
+            - Export Excel
 
 - Thực thi (impl)/cài đặt: môi trường, công cụ, phiên bản, cài đặt
     - Môi trường: Node v14.0.0, npm v6.0, Mysql v8.0
