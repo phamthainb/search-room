@@ -37,15 +37,8 @@ export class AppController {
     return this.appService.search_order(req);
   }
 
-  @Get('/export-excel')
+  @Post('/export-excel')
   async export_excel(@Req() req: Request) {
-    // res.header(
-    //   'Content-disposition',
-    //   'attachment; filename=anlikodullendirme.xlsx',
-    // );
-    // res.type(
-    //   'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-    // );
-    // return res.send(buffer);
+    return this.appService.excel_export(req);
   }
 }

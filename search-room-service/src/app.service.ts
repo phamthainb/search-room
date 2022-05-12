@@ -93,4 +93,22 @@ export class AppService {
       throw new HttpException('Input value invalid', HttpStatus.BAD_REQUEST);
     }
   }
+
+  async excel_export(req: Request) {
+    try {
+      await this.check_auth(req);
+
+      const res = await axios({
+        method: 'POST',
+        url: `${service.excel.url}/excel`,
+        data: req.body,
+        headers: {
+          authorization: req.headers['authorization'] || '',
+        },
+      });
+      return res.data;
+    } catch (error) {
+      throw new HttpException('Input value invalid', HttpStatus.BAD_REQUEST);
+    }
+  }
 }

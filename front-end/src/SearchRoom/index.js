@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 
 import { Table, InputNumber, DatePicker, message } from "antd";
 import Layouts from "../Layout";
-
 import { Form, Row, Col, Input, Button, Select } from "antd";
 import { Link } from "react-router-dom";
 import { requestToken } from "../api";
@@ -76,16 +75,20 @@ const AdvancedSearchForm = ({ onSearch, data }) => {
         >
           <Button type="ghost" onClick={() => {
             requestToken({
-              method: "POST", url: 'http://localhost:3006/excel', data: {
-                data: data
+              method: "POST", url: URL.EXPORT_EXCEL, data: {
+                data: data,
+                file_name: "list-room"
+              },
+              header: {
+                'Content-Type':
+                  'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
               }
             })
               .then((res) => {
-                // setData(res.data);
-                console.log(res);
+                window.open(`http://localhost:3006/${res.data}`)
               })
               .catch(() => {
-                message.error("Error in searching rooms");
+                message.error("Error Export Excel file");
               });
           }} >
             Export Excel
