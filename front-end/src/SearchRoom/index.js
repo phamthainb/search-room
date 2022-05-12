@@ -10,7 +10,7 @@ import { URL } from "../api/url";
 
 const { Option } = Select;
 
-const AdvancedSearchForm = ({ onSearch }) => {
+const AdvancedSearchForm = ({ onSearch, data }) => {
   const [form] = Form.useForm();
 
   const onFinish = (values) => {
@@ -74,7 +74,20 @@ const AdvancedSearchForm = ({ onSearch }) => {
             marginBottom: '24px'
           }}
         >
-          <Button type="ghost" >
+          <Button type="ghost" onClick={() => {
+            requestToken({
+              method: "POST", url: 'http://localhost:3006/excel', data: {
+                data: data
+              }
+            })
+              .then((res) => {
+                // setData(res.data);
+                console.log(res);
+              })
+              .catch(() => {
+                message.error("Error in searching rooms");
+              });
+          }} >
             Export Excel
           </Button>
 
@@ -150,6 +163,7 @@ const SearchRoom = () => {
         onSearch={(values) => {
           setParams({ ...values });
         }}
+        data={data}
       />
       <Table columns={columns} dataSource={data} />
     </Layouts>
