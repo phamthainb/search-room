@@ -1,0 +1,155 @@
+-- MySQL dump 10.13  Distrib 8.0.28, for macos11.6 (arm64)
+--
+-- Host: localhost    Database: search-room
+-- ------------------------------------------------------
+-- Server version	8.0.28
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `customers`
+--
+
+DROP TABLE IF EXISTS `customers`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `customers` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `create_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  `update_at` timestamp(6) NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
+  `delete_at` timestamp(6) NULL DEFAULT NULL,
+  `name` varchar(255) NOT NULL,
+  `phone` varchar(255) NOT NULL,
+  `address` varchar(255) NOT NULL,
+  `passport` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `customers`
+--
+
+LOCK TABLES `customers` WRITE;
+/*!40000 ALTER TABLE `customers` DISABLE KEYS */;
+INSERT INTO `customers` VALUES (1,'2022-05-10 18:04:05.467820','2022-05-10 18:04:05.467820',NULL,'string','string','string','string'),(2,'2022-05-10 18:18:51.884309','2022-05-10 18:18:51.884309',NULL,'string','string','string','string'),(3,'2022-05-10 18:19:13.167924','2022-05-10 18:19:13.167924',NULL,'string','string','string','string'),(4,'2022-05-10 18:22:17.677504','2022-05-10 18:22:17.677504',NULL,'string','string','string','string');
+/*!40000 ALTER TABLE `customers` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `employees`
+--
+
+DROP TABLE IF EXISTS `employees`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `employees` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `create_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  `update_at` timestamp(6) NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
+  `delete_at` timestamp(6) NULL DEFAULT NULL,
+  `name` varchar(255) NOT NULL,
+  `username` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `IDX_31358a1a133482b25fe81b021e` (`username`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `employees`
+--
+
+LOCK TABLES `employees` WRITE;
+/*!40000 ALTER TABLE `employees` DISABLE KEYS */;
+INSERT INTO `employees` VALUES (1,'2022-05-10 17:47:17.859679','2022-05-10 17:47:17.859679',NULL,'string','string','$2b$12$WdaKscAZOHqvFD0i/tbgLe1Olar5pWsjqjZhPozkpce1lUR0dhqsm'),(2,'2022-05-11 18:59:32.343430','2022-05-11 18:59:32.343430',NULL,'phamthainb','phamthainb','$2b$12$7.2EumRzdVHJPcnaNa33HO6zRfPapmfI9bun9DWrwp8Ddpt203AkO');
+/*!40000 ALTER TABLE `employees` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `orders`
+--
+
+DROP TABLE IF EXISTS `orders`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `orders` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `create_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  `update_at` timestamp(6) NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
+  `delete_at` timestamp(6) NULL DEFAULT NULL,
+  `customer` int NOT NULL,
+  `room` int NOT NULL,
+  `employee` int NOT NULL,
+  `start` datetime NOT NULL,
+  `end` datetime NOT NULL,
+  `status` int NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `orders`
+--
+
+LOCK TABLES `orders` WRITE;
+/*!40000 ALTER TABLE `orders` DISABLE KEYS */;
+INSERT INTO `orders` VALUES (9,'2022-05-12 18:47:45.163723','2022-05-12 19:18:40.564526',NULL,1,609,1,'2022-05-13 01:35:56','2022-05-14 01:35:56',1),(10,'2022-05-12 18:49:10.774201','2022-05-12 19:18:40.568126',NULL,1,610,1,'2022-05-13 01:35:56','2022-05-17 01:35:56',1),(11,'2022-05-12 19:02:02.592814','2022-05-12 19:18:40.568926',NULL,1,701,1,'2022-05-16 01:35:56','2022-05-26 01:35:56',1),(12,'2022-05-12 19:02:15.169182','2022-05-12 19:18:40.570101',NULL,1,702,1,'2022-05-14 01:35:56','2022-05-21 01:35:56',1);
+/*!40000 ALTER TABLE `orders` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `rooms`
+--
+
+DROP TABLE IF EXISTS `rooms`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `rooms` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `create_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  `update_at` timestamp(6) NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
+  `delete_at` timestamp(6) NULL DEFAULT NULL,
+  `name` varchar(255) NOT NULL DEFAULT 'x',
+  `status` tinyint NOT NULL DEFAULT '1',
+  `price` int NOT NULL DEFAULT '0',
+  `type` int NOT NULL DEFAULT '1',
+  `desc` varchar(255) NOT NULL DEFAULT 'Mô tả phòng',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `IDX_48b79438f8707f3d9ca83d85ea` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=707 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `rooms`
+--
+
+LOCK TABLES `rooms` WRITE;
+/*!40000 ALTER TABLE `rooms` DISABLE KEYS */;
+INSERT INTO `rooms` VALUES (607,'2022-05-12 19:17:01.229733','2022-05-12 19:17:01.229733',NULL,'101',1,513,2,'cặp đôi, đồ ăn, ban công, tủ đồ, thoáng mát, nhiều phòng, quý tộc, tủ lạnh, phòng rộng'),(608,'2022-05-12 19:17:01.236556','2022-05-12 19:17:01.236556',NULL,'102',1,832,1,'phòng đẹp, bàn ghế, ban công, đồ ăn, quý tộc, cặp đôi, tủ đồ, nhiều phòng, phòng rộng, bồn tắm'),(609,'2022-05-12 19:17:01.242954','2022-05-12 19:19:24.946066',NULL,'103',0,1537,1,'tủ lạnh, đồ ăn, bồn tắm, bàn ghế, phòng rộng, ban công'),(610,'2022-05-12 19:17:01.246249','2022-05-12 19:19:24.948369',NULL,'104',0,204,1,'bàn ghế, thoáng mát, lãng mạn, nhiều phòng, cặp đôi, ban công, tủ lạnh, quý tộc'),(611,'2022-05-12 19:17:01.249909','2022-05-12 19:17:01.249909',NULL,'105',1,1927,1,'ban công, quý tộc, nhiều phòng, thoáng mát, cặp đôi, bàn ghế'),(612,'2022-05-12 19:17:01.252391','2022-05-12 19:17:01.252391',NULL,'106',1,817,2,'quý tộc, đồ ăn, lãng mạn'),(613,'2022-05-12 19:17:01.254887','2022-05-12 19:17:01.254887',NULL,'107',1,67,1,'quý tộc, bàn ghế, phòng rộng, nhiều phòng, tủ lạnh, phòng đẹp, ban công, bồn tắm, tủ đồ'),(614,'2022-05-12 19:17:01.258345','2022-05-12 19:17:01.258345',NULL,'108',1,1381,2,'phòng đẹp, phòng rộng, tủ lạnh, thoáng mát, cặp đôi, quý tộc, view biển'),(615,'2022-05-12 19:17:01.261254','2022-05-12 19:17:01.261254',NULL,'109',1,1085,2,'bàn ghế, phòng rộng, thoáng mát, quý tộc, tủ lạnh, lãng mạn, bồn tắm'),(616,'2022-05-12 19:17:01.264001','2022-05-12 19:17:01.264001',NULL,'110',1,245,2,'quý tộc, view biển, tủ lạnh, tủ đồ, bàn ghế, thoáng mát, đồ ăn'),(617,'2022-05-12 19:17:01.266404','2022-05-12 19:17:01.266404',NULL,'201',1,1630,1,'tủ lạnh, thoáng mát, nhiều phòng, phòng rộng, cặp đôi, tủ đồ, bàn ghế'),(618,'2022-05-12 19:17:01.269785','2022-05-12 19:17:01.269785',NULL,'202',1,1657,1,'lãng mạn, cặp đôi, bàn ghế, nhiều phòng'),(619,'2022-05-12 19:17:01.272748','2022-05-12 19:17:01.272748',NULL,'203',1,1134,2,'bàn ghế, quý tộc, ban công'),(620,'2022-05-12 19:17:01.276154','2022-05-12 19:17:01.276154',NULL,'204',1,1546,2,'tủ đồ, cặp đôi, lãng mạn, phòng đẹp, ban công, tủ lạnh, phòng rộng, đồ ăn, bồn tắm'),(621,'2022-05-12 19:17:01.278951','2022-05-12 19:17:01.278951',NULL,'205',1,1672,1,'lãng mạn, phòng rộng, tủ lạnh, nhiều phòng, ban công, phòng đẹp, view biển'),(622,'2022-05-12 19:17:01.281280','2022-05-12 19:17:01.281280',NULL,'206',1,369,1,'thoáng mát, phòng rộng, lãng mạn, ban công, đồ ăn, cặp đôi'),(623,'2022-05-12 19:17:01.283616','2022-05-12 19:17:01.283616',NULL,'207',1,1209,2,'tủ lạnh, bồn tắm, quý tộc, đồ ăn'),(624,'2022-05-12 19:17:01.286078','2022-05-12 19:17:01.286078',NULL,'208',1,1003,2,'quý tộc, bồn tắm, ban công, phòng rộng, tủ đồ'),(625,'2022-05-12 19:17:01.292822','2022-05-12 19:17:01.292822',NULL,'209',1,1453,2,'tủ đồ, view biển, đồ ăn, phòng đẹp, nhiều phòng, tủ lạnh, thoáng mát, bàn ghế, lãng mạn, bồn tắm'),(626,'2022-05-12 19:17:01.296896','2022-05-12 19:17:01.296896',NULL,'220',1,1541,2,'thoáng mát, phòng rộng, ban công, phòng đẹp, cặp đôi, quý tộc, view biển'),(627,'2022-05-12 19:17:01.299600','2022-05-12 19:17:01.299600',NULL,'301',1,229,1,'thoáng mát, nhiều phòng, view biển, bồn tắm, cặp đôi, lãng mạn, phòng rộng'),(628,'2022-05-12 19:17:01.301812','2022-05-12 19:17:01.301812',NULL,'302',1,718,2,'cặp đôi, ban công, tủ lạnh, nhiều phòng, quý tộc, bàn ghế'),(629,'2022-05-12 19:17:01.306993','2022-05-12 19:17:01.306993',NULL,'303',1,1241,2,'quý tộc, nhiều phòng, cặp đôi, view biển, đồ ăn, bồn tắm, tủ lạnh, tủ đồ, lãng mạn'),(630,'2022-05-12 19:17:01.310620','2022-05-12 19:17:01.310620',NULL,'304',1,1527,2,'quý tộc, bàn ghế, thoáng mát'),(631,'2022-05-12 19:17:01.313650','2022-05-12 19:17:01.313650',NULL,'305',1,140,2,'cặp đôi, lãng mạn, thoáng mát, tủ lạnh, ban công, phòng đẹp, quý tộc, bồn tắm, đồ ăn, phòng rộng'),(632,'2022-05-12 19:17:01.316028','2022-05-12 19:17:01.316028',NULL,'306',1,616,1,'phòng đẹp, nhiều phòng, tủ đồ, đồ ăn, quý tộc, bàn ghế, cặp đôi'),(633,'2022-05-12 19:17:01.318720','2022-05-12 19:17:01.318720',NULL,'307',1,1510,2,'lãng mạn, nhiều phòng, ban công, cặp đôi, bàn ghế'),(634,'2022-05-12 19:17:01.321371','2022-05-12 19:17:01.321371',NULL,'308',1,1538,2,'bồn tắm, quý tộc, view biển, đồ ăn, nhiều phòng, bàn ghế, phòng đẹp, tủ lạnh, tủ đồ, lãng mạn'),(635,'2022-05-12 19:17:01.324659','2022-05-12 19:17:01.324659',NULL,'309',1,431,1,'tủ lạnh, cặp đôi, bàn ghế, lãng mạn, tủ đồ, nhiều phòng, ban công'),(636,'2022-05-12 19:17:01.327178','2022-05-12 19:17:01.327178',NULL,'330',1,304,1,'phòng đẹp, đồ ăn, bồn tắm, view biển, cặp đôi, bàn ghế, tủ lạnh'),(637,'2022-05-12 19:17:01.329435','2022-05-12 19:17:01.329435',NULL,'401',1,486,2,'bàn ghế, ban công, thoáng mát, lãng mạn, bồn tắm, quý tộc'),(638,'2022-05-12 19:17:01.331604','2022-05-12 19:17:01.331604',NULL,'402',1,1021,2,'tủ lạnh, nhiều phòng, ban công, view biển, đồ ăn, bồn tắm, quý tộc, thoáng mát, bàn ghế, cặp đôi'),(639,'2022-05-12 19:17:01.334266','2022-05-12 19:17:01.334266',NULL,'403',1,1377,1,'lãng mạn, phòng rộng, tủ lạnh, đồ ăn'),(640,'2022-05-12 19:17:01.336616','2022-05-12 19:17:01.336616',NULL,'404',1,1911,1,'tủ lạnh, bồn tắm, quý tộc, nhiều phòng, phòng rộng, ban công, đồ ăn, bàn ghế, cặp đôi'),(641,'2022-05-12 19:17:01.339569','2022-05-12 19:17:01.339569',NULL,'405',1,81,1,'bồn tắm, tủ lạnh, phòng đẹp, thoáng mát, quý tộc, phòng rộng'),(642,'2022-05-12 19:17:01.342921','2022-05-12 19:17:01.342921',NULL,'406',1,1341,2,'view biển, nhiều phòng, quý tộc, ban công, phòng rộng'),(643,'2022-05-12 19:17:01.345643','2022-05-12 19:17:01.345643',NULL,'407',1,630,2,'cặp đôi, lãng mạn, bồn tắm, phòng rộng, thoáng mát'),(644,'2022-05-12 19:17:01.348189','2022-05-12 19:17:01.348189',NULL,'408',1,92,2,'bàn ghế, phòng đẹp, quý tộc, view biển, thoáng mát, nhiều phòng, phòng rộng, tủ lạnh'),(645,'2022-05-12 19:17:01.351352','2022-05-12 19:17:01.351352',NULL,'409',1,393,2,'quý tộc, nhiều phòng, đồ ăn, tủ lạnh, ban công, cặp đôi, view biển'),(646,'2022-05-12 19:17:01.354377','2022-05-12 19:17:01.354377',NULL,'440',1,1380,1,'quý tộc, nhiều phòng, view biển, lãng mạn, ban công, cặp đôi'),(647,'2022-05-12 19:17:01.358476','2022-05-12 19:17:01.358476',NULL,'501',1,1607,2,'đồ ăn, ban công, view biển, bồn tắm, thoáng mát, tủ đồ, tủ lạnh'),(648,'2022-05-12 19:17:01.361061','2022-05-12 19:17:01.361061',NULL,'502',1,731,2,'cặp đôi, phòng rộng, bồn tắm, phòng đẹp, đồ ăn, ban công, quý tộc'),(649,'2022-05-12 19:17:01.363414','2022-05-12 19:17:01.363414',NULL,'503',1,507,1,'đồ ăn, phòng đẹp'),(650,'2022-05-12 19:17:01.365507','2022-05-12 19:17:01.365507',NULL,'504',1,1727,2,'tủ lạnh, lãng mạn, bồn tắm, bàn ghế, phòng rộng, đồ ăn, ban công, tủ đồ'),(651,'2022-05-12 19:17:01.373535','2022-05-12 19:17:01.373535',NULL,'505',1,348,2,'ban công, cặp đôi, quý tộc, bồn tắm, view biển'),(652,'2022-05-12 19:17:01.376632','2022-05-12 19:17:01.376632',NULL,'506',1,1626,1,'tủ lạnh, bồn tắm'),(653,'2022-05-12 19:17:01.378673','2022-05-12 19:17:01.378673',NULL,'507',1,405,2,'tủ đồ, bàn ghế, thoáng mát, tủ lạnh, đồ ăn, phòng rộng, cặp đôi, quý tộc, nhiều phòng, bồn tắm, lãng mạn'),(654,'2022-05-12 19:17:01.380605','2022-05-12 19:17:01.380605',NULL,'508',1,775,1,'đồ ăn, bồn tắm, nhiều phòng, tủ đồ, phòng đẹp'),(655,'2022-05-12 19:17:01.382618','2022-05-12 19:17:01.382618',NULL,'509',1,905,1,'phòng đẹp, tủ lạnh, thoáng mát, ban công'),(656,'2022-05-12 19:17:01.384909','2022-05-12 19:17:01.384909',NULL,'550',1,611,2,'tủ lạnh'),(657,'2022-05-12 19:17:01.387420','2022-05-12 19:17:01.387420',NULL,'601',1,166,2,'lãng mạn, cặp đôi, đồ ăn, tủ lạnh, phòng đẹp, tủ đồ, thoáng mát'),(658,'2022-05-12 19:17:01.390350','2022-05-12 19:17:01.390350',NULL,'602',1,775,2,'phòng đẹp, quý tộc, ban công, phòng rộng, đồ ăn, bàn ghế'),(659,'2022-05-12 19:17:01.393415','2022-05-12 19:17:01.393415',NULL,'603',1,1548,2,'thoáng mát, phòng đẹp'),(660,'2022-05-12 19:17:01.395639','2022-05-12 19:17:01.395639',NULL,'604',1,380,1,'view biển'),(661,'2022-05-12 19:17:01.399469','2022-05-12 19:17:01.399469',NULL,'605',1,400,1,'tủ đồ, phòng đẹp, lãng mạn, quý tộc, nhiều phòng, tủ lạnh'),(662,'2022-05-12 19:17:01.401999','2022-05-12 19:17:01.401999',NULL,'606',1,419,2,'ban công, bàn ghế, quý tộc, đồ ăn'),(663,'2022-05-12 19:17:01.404671','2022-05-12 19:17:01.404671',NULL,'607',1,211,1,'bồn tắm, thoáng mát, đồ ăn, nhiều phòng'),(664,'2022-05-12 19:17:01.408057','2022-05-12 19:17:01.408057',NULL,'608',1,1613,2,'nhiều phòng, lãng mạn, đồ ăn, cặp đôi, bàn ghế, ban công, tủ lạnh'),(665,'2022-05-12 19:17:01.410414','2022-05-12 19:17:01.410414',NULL,'609',1,300,1,'đồ ăn, ban công, tủ đồ, view biển, bàn ghế, lãng mạn, phòng đẹp, phòng rộng, thoáng mát, nhiều phòng'),(666,'2022-05-12 19:17:01.412556','2022-05-12 19:17:01.412556',NULL,'660',1,1624,1,'view biển'),(667,'2022-05-12 19:17:01.414568','2022-05-12 19:17:01.414568',NULL,'701',1,1170,1,'nhiều phòng, phòng rộng, quý tộc'),(668,'2022-05-12 19:17:01.416564','2022-05-12 19:17:01.416564',NULL,'702',1,213,1,'nhiều phòng, ban công, phòng đẹp, bàn ghế, tủ đồ, view biển, phòng rộng'),(669,'2022-05-12 19:17:01.418632','2022-05-12 19:17:01.418632',NULL,'703',1,1817,1,'cặp đôi, ban công, phòng đẹp, phòng rộng'),(670,'2022-05-12 19:17:01.420826','2022-05-12 19:17:01.420826',NULL,'704',1,638,2,'bàn ghế'),(671,'2022-05-12 19:17:01.424017','2022-05-12 19:17:01.424017',NULL,'705',1,354,1,'lãng mạn'),(672,'2022-05-12 19:17:01.426607','2022-05-12 19:17:01.426607',NULL,'706',1,623,2,'nhiều phòng, tủ lạnh, ban công, bàn ghế, quý tộc, tủ đồ, phòng rộng'),(673,'2022-05-12 19:17:01.428778','2022-05-12 19:17:01.428778',NULL,'707',1,1815,1,'bàn ghế, cặp đôi, tủ đồ, phòng đẹp'),(674,'2022-05-12 19:17:01.431146','2022-05-12 19:17:01.431146',NULL,'708',1,803,1,'ban công, quý tộc, phòng đẹp, tủ lạnh, cặp đôi, lãng mạn, bàn ghế, thoáng mát, phòng rộng'),(675,'2022-05-12 19:17:01.433073','2022-05-12 19:17:01.433073',NULL,'709',1,1300,2,'cặp đôi, quý tộc, nhiều phòng, view biển, bồn tắm, phòng đẹp, thoáng mát, tủ lạnh'),(676,'2022-05-12 19:17:01.435057','2022-05-12 19:17:01.435057',NULL,'770',1,639,2,'nhiều phòng, bồn tắm, thoáng mát, lãng mạn, quý tộc, phòng đẹp, đồ ăn, view biển'),(677,'2022-05-12 19:17:01.437146','2022-05-12 19:17:01.437146',NULL,'801',1,611,2,'view biển, phòng đẹp, lãng mạn, quý tộc, tủ lạnh, bồn tắm, bàn ghế, cặp đôi, ban công'),(678,'2022-05-12 19:17:01.440360','2022-05-12 19:17:01.440360',NULL,'802',1,1122,1,'bàn ghế, phòng đẹp, bồn tắm, lãng mạn, thoáng mát, nhiều phòng, quý tộc, ban công, phòng rộng, tủ đồ'),(679,'2022-05-12 19:17:01.443342','2022-05-12 19:17:01.443342',NULL,'803',1,1311,2,'view biển'),(680,'2022-05-12 19:17:01.445486','2022-05-12 19:17:01.445486',NULL,'804',1,1726,2,'bàn ghế, quý tộc, view biển, cặp đôi'),(681,'2022-05-12 19:17:01.448395','2022-05-12 19:17:01.448395',NULL,'805',1,1664,1,'quý tộc, ban công, phòng rộng, nhiều phòng'),(682,'2022-05-12 19:17:01.450857','2022-05-12 19:17:01.450857',NULL,'806',1,508,2,'tủ lạnh, view biển, nhiều phòng, lãng mạn, quý tộc, phòng rộng, cặp đôi'),(683,'2022-05-12 19:17:01.453297','2022-05-12 19:17:01.453297',NULL,'807',1,1195,2,'lãng mạn, đồ ăn, ban công, bồn tắm'),(684,'2022-05-12 19:17:01.457329','2022-05-12 19:17:01.457329',NULL,'808',1,1040,1,'lãng mạn, bồn tắm'),(685,'2022-05-12 19:17:01.460893','2022-05-12 19:17:01.460893',NULL,'809',1,1405,1,'nhiều phòng, bàn ghế, cặp đôi, ban công'),(686,'2022-05-12 19:17:01.463675','2022-05-12 19:17:01.463675',NULL,'880',1,1173,2,'ban công, lãng mạn, bàn ghế, view biển, cặp đôi'),(687,'2022-05-12 19:17:01.465863','2022-05-12 19:17:01.465863',NULL,'901',1,1017,2,'thoáng mát, tủ đồ, bàn ghế, phòng đẹp, phòng rộng, quý tộc'),(688,'2022-05-12 19:17:01.467817','2022-05-12 19:17:01.467817',NULL,'902',1,1160,1,'phòng đẹp, đồ ăn, lãng mạn, tủ đồ, view biển, tủ lạnh'),(689,'2022-05-12 19:17:01.470863','2022-05-12 19:17:01.470863',NULL,'903',1,1675,2,'cặp đôi, view biển, nhiều phòng, lãng mạn, tủ đồ, tủ lạnh, bồn tắm'),(690,'2022-05-12 19:17:01.474282','2022-05-12 19:17:01.474282',NULL,'904',1,1212,2,'nhiều phòng, tủ lạnh, đồ ăn, bồn tắm, tủ đồ, cặp đôi'),(691,'2022-05-12 19:17:01.476810','2022-05-12 19:17:01.476810',NULL,'905',1,1673,2,'lãng mạn, phòng rộng, thoáng mát, quý tộc, nhiều phòng, bồn tắm, ban công, cặp đôi, tủ lạnh, view biển'),(692,'2022-05-12 19:17:01.478907','2022-05-12 19:17:01.478907',NULL,'906',1,1199,2,'phòng đẹp, bàn ghế, tủ lạnh, phòng rộng, tủ đồ, cặp đôi, view biển, nhiều phòng, lãng mạn'),(693,'2022-05-12 19:17:01.481031','2022-05-12 19:17:01.481031',NULL,'907',1,300,2,'phòng rộng, quý tộc, tủ lạnh, cặp đôi'),(694,'2022-05-12 19:17:01.482812','2022-05-12 19:17:01.482812',NULL,'908',1,982,2,'view biển'),(695,'2022-05-12 19:17:01.484738','2022-05-12 19:17:01.484738',NULL,'909',1,634,2,'đồ ăn, bồn tắm, ban công, tủ đồ, bàn ghế, quý tộc, phòng rộng, cặp đôi'),(696,'2022-05-12 19:17:01.487940','2022-05-12 19:17:01.487940',NULL,'990',1,1742,2,'bồn tắm, view biển, bàn ghế, ban công, cặp đôi, quý tộc, phòng đẹp, tủ lạnh, nhiều phòng'),(697,'2022-05-12 19:17:01.493148','2022-05-12 19:17:01.493148',NULL,'1001',1,556,1,'nhiều phòng, tủ lạnh, view biển, phòng đẹp, phòng rộng, lãng mạn, cặp đôi'),(698,'2022-05-12 19:17:01.496327','2022-05-12 19:17:01.496327',NULL,'1002',1,255,2,'tủ lạnh, bàn ghế, cặp đôi, bồn tắm'),(699,'2022-05-12 19:17:01.498567','2022-05-12 19:17:01.498567',NULL,'1003',1,951,2,'thoáng mát, lãng mạn, tủ đồ, đồ ăn, bồn tắm, cặp đôi, nhiều phòng, phòng rộng'),(700,'2022-05-12 19:17:01.500627','2022-05-12 19:17:01.500627',NULL,'1004',1,661,2,'đồ ăn, bàn ghế, cặp đôi, phòng đẹp, phòng rộng, lãng mạn, tủ lạnh, nhiều phòng, thoáng mát'),(701,'2022-05-12 19:17:01.502631','2022-05-12 19:19:24.949536',NULL,'1005',0,1542,2,'đồ ăn, view biển, tủ lạnh, lãng mạn, bồn tắm, phòng rộng, cặp đôi'),(702,'2022-05-12 19:17:01.506274','2022-05-12 19:19:24.950389',NULL,'1006',0,339,2,'ban công, cặp đôi, phòng rộng, tủ lạnh, tủ đồ, quý tộc, bàn ghế, lãng mạn'),(703,'2022-05-12 19:17:01.515675','2022-05-12 19:17:01.515675',NULL,'1007',1,1506,2,'tủ lạnh, view biển, phòng đẹp, đồ ăn, lãng mạn, phòng rộng, tủ đồ, nhiều phòng'),(704,'2022-05-12 19:17:01.517878','2022-05-12 19:17:01.517878',NULL,'1008',1,689,1,'tủ lạnh, bàn ghế, nhiều phòng, thoáng mát, lãng mạn, bồn tắm'),(705,'2022-05-12 19:17:01.519725','2022-05-12 19:17:01.519725',NULL,'1009',1,1710,1,'quý tộc, tủ lạnh'),(706,'2022-05-12 19:17:01.521700','2022-05-12 19:17:01.521700',NULL,'1100',1,1306,1,'nhiều phòng, bồn tắm, tủ đồ, phòng đẹp');
+/*!40000 ALTER TABLE `rooms` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping routines for database 'search-room'
+--
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2022-05-13  2:25:02

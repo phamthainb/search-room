@@ -37,6 +37,6 @@ export const service = {
     url: 'http://localhost:3006',
   },
   main: {
-    url: 'http://localhost:3004',
+    url: 'http://localhost:3004', // <=====
   },
 };

@@ -27,18 +27,18 @@ export class Room extends BaseEntity {
   delete_at: Date;
   //----------------------------------------------///
 
-  @Column()
+  @Column({ unique: true, default: 'x' })
   name: string;
 
-  @Column()
+  @Column({ default: 'Mô tả phòng' })
   desc: string;
 
   @Column({ type: 'boolean', default: true })
   status: boolean; // true: trống, false: đang sd
 
-  @Column()
+  @Column({ default: 0 })
   price: number;
 
-  @Column()
+  @Column({ default: 1 })
   type: number; // 1, 2, 3
 }

@@ -71,6 +71,7 @@ export default function Layouts(props) {
         <Footer
           style={{
             textAlign: "center",
+            fontSize: 36
           }}
         >
           Created by Team 22 PTIT with love ❤️❤️❤️

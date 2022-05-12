@@ -4,6 +4,7 @@ import { CreateRoomDto } from './dto/create-room.dto';
 import { SearchRoomDto } from './dto/search-room.dto';
 import { UpdateRoomDto } from './dto/update-room.dto';
 import { RoomRepository } from './room.repository';
+import axios from 'axios';
 
 @Injectable()
 export class RoomService {
@@ -16,6 +17,8 @@ export class RoomService {
   async findAll(params: SearchRoomDto) {
     const { name, desc, maxPrice, minPrice, status, type, startTime, endTime } =
       params;
+    console.log('params', params);
+
     const query = this.repo_room.createQueryBuilder('room');
 
     if (minPrice > maxPrice || endTime < startTime) {
@@ -30,8 +33,10 @@ export class RoomService {
       query.andWhere('room.desc like :desc', { desc: `%${desc}%` });
     }
 
-    if (status) {
-      query.andWhere('room.status = :status', { status: `${status}` });
+    if (status != null) {
+      query.andWhere('room.status = :status', {
+        status: status,
+      });
     }
 
     if (type) {
@@ -47,6 +52,23 @@ export class RoomService {
     }
 
     // startTime, endTime => find all room don't have Order btw time
+    if (startTime || endTime) {
+      const res = await axios({
+        method: 'get',
+        url: `http://localhost:3003/order`,
+        params: {
+          startTime,
+          endTime,
+        },
+      });
+      console.log('res.data', res.data);
+      const list = res.data.map((k) => k.room);
+      console.log('list', list);
+      if (list.length > 0) {
+        query.andWhere('room.id NOT IN (:list)', { list: list });
+      }
+    }
+    // console.log(query.getQueryAndParameters());
 
     const result = await query.getMany();
 

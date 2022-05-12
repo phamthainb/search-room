@@ -3,14 +3,31 @@ import { CreateOrderDto } from './dto/create-order.dto';
 import { SearchOrderDto } from './dto/search-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
 import { OrderRepository } from './order.repository';
-
+import axios from 'axios';
 @Injectable()
 export class OrderService {
   constructor(private repo_order: OrderRepository) {}
 
   async create(createOrderDto: CreateOrderDto) {
     // check room available => create
-    return await this.repo_order.save({ ...createOrderDto });
+    const room = await axios({
+      method: 'GET',
+      url: `http://localhost:3002/room/${createOrderDto.room}`,
+    });
+
+    if (room.data.status) {
+      // change status of room
+      await axios({
+        method: 'PATCH',
+        url: `http://localhost:3002/room/${createOrderDto.room}`,
+        data: {
+          status: false,
+        },
+      });
+      return await this.repo_order.save({ ...createOrderDto });
+    } else {
+      throw new HttpException('Room is not avalibale', HttpStatus.BAD_REQUEST);
+    }
   }
 
   async findAll(params: SearchOrderDto) {

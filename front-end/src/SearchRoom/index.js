@@ -31,10 +31,10 @@ const AdvancedSearchForm = ({ onSearch, data }) => {
         </Col>
         <Col span={12}>
           <Form.Item name={"status"} label={"Trạng thái"}>
-            <Select defaultValue={-1}>
-              <Option value={-1}>Tất cả</Option>
-              <Option value={0}>Còn trống</Option>
-              <Option value={1}>Đang sử dụng</Option>
+            <Select defaultValue={null}>
+              <Option value={null}>Tất cả</Option>
+              <Option value={1}>Còn trống</Option>
+              <Option value={0}>Đang sử dụng</Option>
             </Select>
           </Form.Item>
         </Col>
@@ -61,6 +61,15 @@ const AdvancedSearchForm = ({ onSearch, data }) => {
         <Col span={12}>
           <Form.Item name={"endTime"} label={"Ngày kết thúc"}>
             <DatePicker />
+          </Form.Item>
+        </Col>
+        <Col span={12}>
+          <Form.Item name={"type"} label={"Loại phòng"}>
+            <Select defaultValue={null}>
+              <Option value={null}>Tất cả</Option>
+              <Option value={1}>Phòng đơn</Option>
+              <Option value={2}>Phòng Đôi</Option>
+            </Select>
           </Form.Item>
         </Col>
       </Row>
@@ -113,6 +122,11 @@ const AdvancedSearchForm = ({ onSearch, data }) => {
 
 const columns = [
   {
+    title: "ID",
+    dataIndex: "id",
+    key: "id",
+  },
+  {
     title: "Tên phòng",
     dataIndex: "name",
     key: "name",
@@ -126,22 +140,28 @@ const columns = [
     title: "Giá",
     dataIndex: "price",
     key: "price",
+    render: (text, record) => `$ ${Intl.NumberFormat().format(text)}/ngày`,
+    sorter: (a, b) => Number(a.price) - Number(b.price)
   },
   {
     title: "Loại",
     dataIndex: "type",
-    key: "price",
+    key: "type",
+    render: (text, record) => (record.type === 1 ? "Phòng đơn" : "Phòng đôi"),
+
   },
   {
     title: "Trạng thái",
     dataIndex: "status",
     key: "status",
-    render: (text, record) => (record.status ? "Đang sử dụng" : "Còn trống"),
+    render: (text, record) => (!record.status ? "Đang sử dụng" : "Còn trống"),
   },
   {
     title: "Mô tả",
     dataIndex: "desc",
     key: "desc",
+    width: 400,
+    render: (text, record) => <span style={{ maxWidth: "200px" }} >{text}</span>
   },
 ];
 

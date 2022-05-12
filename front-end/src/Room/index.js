@@ -28,7 +28,7 @@ const columns = [
     title: "Trả phòng",
     dataIndex: "end",
     key: "end",
-    render: (text, record) => `${new Date(record.start).toLocaleTimeString('vi-VN')} - ${new Date(record.start).toLocaleDateString('vi-VN')}`,
+    render: (text, record) => `${new Date(record.end).toLocaleTimeString('vi-VN')} - ${new Date(record.end).toLocaleDateString('vi-VN')}`,
   },
   {
     title: "Trạng thái",
