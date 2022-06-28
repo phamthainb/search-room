@@ -1,3 +1,7 @@
+# Run
+- install pm2
+- create db "search-room" and seed with /docs/dump.sql
+- cd ./search-room & pm2 start ecosystem.config.js
 # Báo cáo
     
 - Giới thiệu 
