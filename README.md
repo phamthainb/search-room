@@ -1,5 +1,6 @@
 # Run
 - install pm2
+- start redis on localhost:6379
 - create db "search-room" and seed with /docs/dump.sql
 - cd ./search-room & pm2 start ecosystem.config.js
 # Báo cáo
