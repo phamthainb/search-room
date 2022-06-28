@@ -12,7 +12,7 @@ import { RoomModule } from './room/room.module';
       host: 'localhost',
       port: 3306,
       username: 'root',
-      password: '', // just is local password :)) happy hacking
+      password: '', // just    local password :)) happy hacking
       database: 'search-room',
       entities: ['dist/**/*.entity{.ts,.js}'],
       synchronize: true,

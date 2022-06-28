@@ -6,6 +6,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { Exclude } from 'class-transformer';
 
 @Entity('employees')
 export class Employee {
@@ -33,5 +34,6 @@ export class Employee {
   username: string;
 
   @Column('varchar')
+  @Exclude()
   password: string;
 }

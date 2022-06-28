@@ -1,0 +1,29 @@
+Thi cuối kì
+- Lịch thi cuối kì 01/07/2022 --> chia lại -> ước lượng (10-15)
+
+- Đánh giá:
+  + Cá nhân
+  + Bài tập lớn (dựa trên cơ sở kết quả hiện tại)
+  
+- Mức độ:
+  + Đạt: cài đặt đầy đủ các dịch vụ + năng lực tương ứng như trong thiết kế. 
+  + Khá: Cài đặt được các thành phần SOA (spring cloud, eureka server) 
+    --- tìm từ khóa tương ứng cho nền tảng lựa chọn [log, tải, gateway].
+  + Tốt:  Task service (composition service) 
+    --- tổ hợp các năng lực của các dịch vụ khác 
+    --- cần thời gian thực hiện frontend làm thế nào hiển thị được trạng thái các dịch vụ đang chạy và thể hiện kết quả (complex method)
+  
+- Ý nghĩa: thực tiễn/thực tế.
+
+- Chuẩn bị:
+  + 02 trang (.txt):
+      - trang 1: hình vẽ về thiết kế cuối cùng dịch vụ (TS, ES, US, MS) và năng lực
+      - trang 2: tương tự như báo cáo cuối kì [cập nhật] (thành viên, đóng góp, url github, req, cài đặt, deploy)
+        + mã nguồn 
+        + chương trình demo (sẵn sàng) 
+        + cập nhật phiên bản [không đủ pin - xin vào trước]
+  
+  
+
+
+

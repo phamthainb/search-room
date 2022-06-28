@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Query, Req } from '@nestjs/common';
+import { Controller, Get, Param, Post, Query, Req } from '@nestjs/common';
 import { query, Request } from 'express';
 import { Readable } from 'stream';
 import { AppService } from './app.service';
@@ -22,9 +22,15 @@ export class AppController {
     return this.appService.check_auth(req);
   }
 
+  // main api
   @Get('/search-room')
   search_room(@Req() req: Request) {
     return this.appService.search_room(req);
+  }
+
+  @Get('/get-request/:id')
+  get_request(@Param('id') id: string, @Req() req: Request) {
+    return this.appService.get_request(id, req);
   }
 
   @Get('/room/:id')

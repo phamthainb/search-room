@@ -17,8 +17,6 @@ export class RoomService {
   async findAll(params: SearchRoomDto) {
     const { name, desc, maxPrice, minPrice, status, type, startTime, endTime } =
       params;
-    console.log('params', params);
-
     const query = this.repo_room.createQueryBuilder('room');
 
     if (minPrice > maxPrice || endTime < startTime) {
@@ -61,9 +59,8 @@ export class RoomService {
           endTime,
         },
       });
-      console.log('res.data', res.data);
       const list = res.data.map((k) => k.room);
-      console.log('list', list);
+
       if (list.length > 0) {
         query.andWhere('room.id NOT IN (:list)', { list: list });
       }

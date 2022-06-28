@@ -1,15 +1,31 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { InjectQueue } from '@nestjs/bull';
+import {
+  CACHE_MANAGER,
+  HttpException,
+  HttpStatus,
+  Inject,
+  Injectable,
+} from '@nestjs/common';
 import axios from 'axios';
 import { Request } from 'express';
 import { service } from './main';
+import { Queue } from 'bull';
+import { randomUUID } from 'crypto';
+import { Cache } from 'cache-manager';
+import { RequestJSON, RequestStatus } from './app.type';
 
 @Injectable()
 export class AppService {
+  constructor(
+    @InjectQueue('request_queue') private queue: Queue,
+    @Inject(CACHE_MANAGER) private cacheManager: Cache,
+  ) {}
+
   getHello(): string {
     return 'Hello World!';
   }
 
-  async login(req: Request) {
+  async login(req: Request | RequestJSON) {
     try {
       const res = await axios({
         method: 'POST',
@@ -25,7 +41,7 @@ export class AppService {
     }
   }
 
-  async check_auth(req: Request) {
+  async check_auth(req: Request | RequestJSON) {
     try {
       const res = await axios({
         method: 'POST',
@@ -36,29 +52,45 @@ export class AppService {
       });
       return res.data;
     } catch (error) {
-      throw new HttpException('Input value invalid', HttpStatus.BAD_REQUEST);
+      throw new HttpException('Unauthorization', HttpStatus.FORBIDDEN);
     }
   }
 
   async search_room(req: Request) {
-    try {
-      await this.check_auth(req);
+    const request_id = randomUUID();
 
-      const res = await axios({
-        method: 'GET',
-        url: `${service.room.url}/room`,
-        params: { ...req.query },
-        headers: {
-          authorization: req.headers['authorization'] || '',
-        },
-      });
-      return res.data;
-    } catch (error) {
-      throw new HttpException('Input value invalid', HttpStatus.BAD_REQUEST);
-    }
+    // for store data
+    await this.cacheManager.set(
+      request_id,
+      {
+        request_id: request_id,
+        status: RequestStatus['0_init'],
+        data: [],
+      },
+      { ttl: 60 * 60 * 1000 },
+    );
+
+    // for store list request
+    await this.queue.add('handle_request', {
+      request_id: request_id,
+      req: { headers: req.headers, body: req.body, query: req.query },
+    });
+
+    return { data: [], request_id };
   }
 
-  async room(req: Request) {
+  async get_request(id: string, req: Request) {
+    await this.check_auth(req);
+
+    const res = await this.cacheManager.get(id);
+
+    if (!res) {
+      throw new HttpException('Request not found', HttpStatus.NOT_FOUND);
+    }
+    return res;
+  }
+
+  async room(req: Request | RequestJSON) {
     try {
       await this.check_auth(req);
 
@@ -76,7 +108,7 @@ export class AppService {
     }
   }
 
-  async search_order(req: Request) {
+  async search_order(req: Request | RequestJSON) {
     try {
       await this.check_auth(req);
 
@@ -94,7 +126,7 @@ export class AppService {
     }
   }
 
-  async excel_export(req: Request) {
+  async excel_export(req: Request | RequestJSON) {
     try {
       await this.check_auth(req);
 
@@ -110,5 +142,10 @@ export class AppService {
     } catch (error) {
       throw new HttpException('Input value invalid', HttpStatus.BAD_REQUEST);
     }
+  }
+
+  async timeout(ms) {
+    console.log(`${new Date().toLocaleTimeString()}: timeout ${ms}ms`);
+    return new Promise((resolve) => setTimeout(resolve, ms));
   }
 }
