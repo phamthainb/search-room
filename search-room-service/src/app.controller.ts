@@ -33,6 +33,11 @@ export class AppController {
     return this.appService.get_request(id, req);
   }
 
+  @Get('/reset-queue')
+  reset_queue() {
+    return this.appService.reset_queue();
+  }
+
   @Get('/room/:id')
   room(@Req() req: Request) {
     return this.appService.room(req);

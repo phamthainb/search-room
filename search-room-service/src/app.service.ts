@@ -67,7 +67,7 @@ export class AppService {
         status: RequestStatus['0_init'],
         data: [],
       },
-      { ttl: 60 * 60 * 1000 },
+      { ttl: 10 * 60 * 1000 },
     );
 
     // for store list request
@@ -79,13 +79,26 @@ export class AppService {
     return { data: [], request_id };
   }
 
+  async reset_queue() {
+    await this.queue.removeJobs('handle_request');
+    await this.cacheManager.reset();
+
+    return true;
+  }
+
   async get_request(id: string, req: Request) {
     await this.check_auth(req);
 
     const res = await this.cacheManager.get(id);
 
     if (!res) {
+      console.log('All cache: ', await this.cacheManager.store.keys());
       throw new HttpException('Request not found', HttpStatus.NOT_FOUND);
+    } else {
+      console.log(
+        'All cache when miss: ',
+        await this.cacheManager.store.keys(),
+      );
     }
     return res;
   }

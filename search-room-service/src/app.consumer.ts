@@ -1,7 +1,7 @@
 import { InjectQueue, Process, Processor } from '@nestjs/bull';
 import { CACHE_MANAGER, Inject } from '@nestjs/common';
 import axios, { AxiosResponse } from 'axios';
-import { Job, Queue } from 'bull';
+import { Job, Queue, JobStatus } from 'bull';
 import { Cache } from 'cache-manager';
 import { AppService } from './app.service';
 import { RequestJSON, RequestStatus } from './app.type';
@@ -24,14 +24,19 @@ export class AppProcessor {
   ) {
     const id = job.data.request_id;
     const req = job.data.req;
+    console.log('getJobs: ', await this.queue.getJobs(['waiting']));
 
     // > check employee auth
     await this.appService.check_auth(job.data.req);
-    await this.cacheManager.set(id, {
-      request_id: id,
-      status: RequestStatus['1_check_auth'],
-    });
-    await this.appService.timeout(5 * 1000);
+    await this.cacheManager.set(
+      id,
+      {
+        request_id: id,
+        status: RequestStatus['1_check_auth'],
+      },
+      { ttl: 10 * 60 * 1000 },
+    );
+    await this.appService.timeout(2 * 1000);
 
     // > get list room
     await this.cacheManager.set(id, {
@@ -52,13 +57,17 @@ export class AppProcessor {
     } catch (error) {}
 
     const list_room = room.data;
-    await this.appService.timeout(5 * 1000);
+    await this.appService.timeout(2 * 1000);
 
     // > get list order of room, 1 room has order[]
-    await this.cacheManager.set(id, {
-      request_id: id,
-      status: RequestStatus['3_get_order'],
-    });
+    await this.cacheManager.set(
+      id,
+      {
+        request_id: id,
+        status: RequestStatus['3_get_order'],
+      },
+      { ttl: 10 * 60 * 1000 },
+    );
     for (let i = 0; i < list_room.length; i++) {
       const el = list_room[i];
       let order;
@@ -74,14 +83,18 @@ export class AppProcessor {
 
       list_room[i] = { ...el, order: order.data };
     }
-    await this.appService.timeout(5 * 1000);
+    await this.appService.timeout(2 * 1000);
     console.log('list_room', list_room);
 
     // > get customer order
-    await this.cacheManager.set(id, {
-      request_id: id,
-      status: RequestStatus['4_get_customer'],
-    });
+    await this.cacheManager.set(
+      id,
+      {
+        request_id: id,
+        status: RequestStatus['4_get_customer'],
+      },
+      { ttl: 10 * 60 * 1000 },
+    );
     for (let i = 0; i < list_room.length; i++) {
       const el = list_room[i];
       const list_order = el.order;
@@ -104,13 +117,17 @@ export class AppProcessor {
 
       list_room[i] = { ...el, order: list_order };
     }
-    await this.appService.timeout(5 * 1000);
+    await this.appService.timeout(2 * 1000);
 
     // > get employee support
-    await this.cacheManager.set(id, {
-      request_id: id,
-      status: RequestStatus['5_get_employee'],
-    });
+    await this.cacheManager.set(
+      id,
+      {
+        request_id: id,
+        status: RequestStatus['5_get_employee'],
+      },
+      { ttl: 10 * 60 * 1000 },
+    );
 
     for (let i = 0; i < list_room.length; i++) {
       const el = list_room[i];
@@ -134,14 +151,18 @@ export class AppProcessor {
 
       list_room[i] = { ...el, order: list_order };
     }
-    await this.appService.timeout(5 * 1000);
+    await this.appService.timeout(2 * 1000);
 
     // > done
-    await this.cacheManager.set(id, {
-      request_id: id,
-      status: RequestStatus['6_done'],
-      data: list_room,
-    });
+    await this.cacheManager.set(
+      id,
+      {
+        request_id: id,
+        status: RequestStatus['6_done'],
+        data: list_room,
+      },
+      { ttl: 10 * 60 * 1000 },
+    );
 
     return true;
   }
