@@ -84,7 +84,7 @@ export class AppProcessor {
       list_room[i] = { ...el, order: order.data };
     }
     await this.appService.timeout(2 * 1000);
-    console.log('list_room', list_room);
+    // console.log('list_room', list_room);
 
     // > get customer order
     await this.cacheManager.set(

@@ -92,13 +92,13 @@ export class AppService {
     const res = await this.cacheManager.get(id);
 
     if (!res) {
-      console.log('All cache: ', await this.cacheManager.store.keys());
-      throw new HttpException('Request not found', HttpStatus.NOT_FOUND);
-    } else {
       console.log(
         'All cache when miss: ',
         await this.cacheManager.store.keys(),
       );
+      throw new HttpException('Request not found', HttpStatus.NOT_FOUND);
+    } else {
+      console.log('All cache: ', await this.cacheManager.store.keys());
     }
     return res;
   }
