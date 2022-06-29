@@ -21,12 +21,6 @@ export default function Layouts(props) {
     getItem("Search Room", "1", <DesktopOutlined />, () => {
       nav("/");
     }),
-    // getItem("Customer", "2", <UserOutlined />, () => {
-    //   window.location.replace("/c");
-    // }),
-    // getItem("Employee", "3", <TeamOutlined />, () => {
-    //   window.location.replace("/e");
-    // }),
     getItem("Logout", "2", <LoginOutlined />, () => {
       nav("/login", { replace: true });
     }),
