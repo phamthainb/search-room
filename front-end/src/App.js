@@ -1,4 +1,3 @@
-import { Layout, Menu } from "antd";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 import React from "react";
@@ -11,9 +10,9 @@ class SiderDemo extends React.Component {
     return (
       <Router>
         <Routes>
-          <Route path="/" element={<SearchRoom />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/room/:id" element={<Room />} />
+          <Route path="/" exact element={<SearchRoom />} />
+          <Route path="/login" exact element={<Login />} />
+          <Route path="/room/:id" exact element={<Room />} />
         </Routes>
       </Router>
     );

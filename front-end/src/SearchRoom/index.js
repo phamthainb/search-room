@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
 
-import { Table, InputNumber, DatePicker, message } from "antd";
+import { Table, InputNumber, DatePicker, message, Steps } from "antd";
 import Layouts from "../Layout";
 import { Form, Row, Col, Input, Button, Select } from "antd";
 import { Link } from "react-router-dom";
-import { requestToken } from "../api";
+import { request, requestToken } from "../api";
 import { URL } from "../api/url";
+import { requestStatus } from "../enum";
 
 const { Option } = Select;
+const { Step } = Steps;
 
 const AdvancedSearchForm = ({ onSearch, data }) => {
   const [form] = Form.useForm();
@@ -79,27 +81,32 @@ const AdvancedSearchForm = ({ onSearch, data }) => {
           span={24}
           style={{
             textAlign: "right",
-            marginBottom: '24px'
+            marginBottom: "24px",
           }}
         >
-          <Button type="ghost" onClick={() => {
-            requestToken({
-              method: "POST", url: URL.EXPORT_EXCEL, data: {
-                data: data,
-                file_name: "list-room"
-              },
-              header: {
-                'Content-Type':
-                  'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-              }
-            })
-              .then((res) => {
-                window.open(`http://localhost:3006/${res.data}`)
+          <Button
+            type="ghost"
+            onClick={() => {
+              requestToken({
+                method: "POST",
+                url: URL.EXPORT_EXCEL,
+                data: {
+                  data: data,
+                  file_name: "list-room",
+                },
+                header: {
+                  "Content-Type":
+                    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                },
               })
-              .catch(() => {
-                message.error("Error Export Excel file");
-              });
-          }} >
+                .then((res) => {
+                  window.open(`http://localhost:3006/${res.data}`);
+                })
+                .catch(() => {
+                  message.error("Error Export Excel file");
+                });
+            }}
+          >
             Export Excel
           </Button>
 
@@ -141,14 +148,13 @@ const columns = [
     dataIndex: "price",
     key: "price",
     render: (text, record) => `$ ${Intl.NumberFormat().format(text)}/ngày`,
-    sorter: (a, b) => Number(a.price) - Number(b.price)
+    sorter: (a, b) => Number(a.price) - Number(b.price),
   },
   {
     title: "Loại",
     dataIndex: "type",
     key: "type",
     render: (text, record) => (record.type === 1 ? "Phòng đơn" : "Phòng đôi"),
-
   },
   {
     title: "Trạng thái",
@@ -161,30 +167,79 @@ const columns = [
     dataIndex: "desc",
     key: "desc",
     width: 400,
-    render: (text, record) => <span style={{ maxWidth: "200px" }} >{text}</span>
+    render: (text, record) => <span style={{ maxWidth: "200px" }}>{text}</span>,
   },
 ];
 
 const SearchRoom = () => {
+
+  const timeoutRef = React.useRef(null)
+
   const [params, setParams] = useState({});
 
   const [data, setData] = useState([]);
 
+  const [status, setStatus] = useState(0);
+
+  const [loading, setLoading] = useState(false);
+
+  const getRequest = React.useCallback((id) => {
+    if (id) {
+      requestToken({ method: "GET", url: URL.GET_REQUEST(id) }).then((res) => {
+        if (requestStatus[res.data.status]?.step !== 6) {
+          setStatus(requestStatus[res.data.status].step);
+          timeoutRef.current = setTimeout(getRequest, 2000, id);
+        } else {
+          setStatus(7);
+          setData(res.data.data);
+          setLoading(false)
+        }
+      });
+    }
+  }, []);
+
   useEffect(() => {
     requestToken({ method: "GET", url: URL.GET_ROOMS, params })
       .then((res) => {
-        setData(res.data);
+        if (res.data) {
+          setLoading(true)
+          getRequest(res.data.request_id);
+        }
       })
       .catch(() => {
         message.error("Error in searching rooms");
       });
-  }, [params]);
+  }, [params, getRequest]);
+
+  useEffect(() => {
+    return () => {
+      if(timeoutRef.current) {
+        clearTimeout(timeoutRef.current)
+      }
+    }
+  }, [])
 
   return (
     <Layouts>
+      <Steps current={status} direction="vertical">
+        {Object.entries(requestStatus).map(([k, v]) => (
+          <Step
+            description={
+              status === v.step
+                ? "In progress"
+                : status > v.step
+                ? "Finished"
+                : "Waiting"
+            }
+            title={v.label}
+          />
+        ))}
+      </Steps>
       <AdvancedSearchForm
         onSearch={(values) => {
-          setParams({ ...values });
+          if (!loading) {
+            setParams({ ...values });
+          }
         }}
         data={data}
       />
